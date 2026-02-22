@@ -4,7 +4,7 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Simple Button Click Example</title>
+ <title>Jobs Tracker</title>
 
   
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
@@ -22,6 +22,31 @@
   body{
     padding: 20px;
   }
+ .badge{
+   background-color: #dcfce7;
+   border-radius: 10px;
+   padding: 4px 5px;
+   color: #16a34a;
+   font-size: 12px;
+  font-weight: 500;
+ }
+
+  .job-card{
+    background-color: white ;
+    border-radius: 10px;
+    /* border: 1px solid green; */
+    padfing: 10px 10px;
+    position: relative;
+  }
+.btn-delete{
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid gray;
+  border-radius: 50%;
+  padding: 5px;
+  
+}
 </style>
   
 </head>
@@ -47,46 +72,48 @@
 <section id="all-jobs">
   <div class="flex justify-between">
     <p>Available Jobs</p>
-    <p id="available-count">0</p>
+    <div class="flex flex-row gap-1">
+      <p id="available-count">0</p><span>jobs</span>
+    </div>
   </div>
-  <button class="btn btn-soft btn-primary" >All</button>
-  <div id="interview-div">
-    <button class="btn bg-base-100">Interview</button>
-    <p>Job not Available</p>
-  </div>
-  <button class="btn bg-base-100">Rejected</button>
+
   
-  <div class="job-card">
+  
+
+<!-- name of each tab group should be unique -->
+<div class="tabs tabs-box">
+  <input type="radio" name="job_tabs" class="tab" aria-label="All" checked="checked" />
+  <div class="tab-content bg-base-100 border-base-300 p-6">
+
+    
+  <!-- all cards hare -->
+  <div id="card-1" class="job-card">
     <h2>Mobile First Corp</h2>
-    <span id="delete-btn" class=""><i class="fa-regular fa-trash-can"></i></span>
+    <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
   <p>React Native Developer</p>
   <p>Remote • Full-time • $130,000 - $175,000</p>
-  <button class="btn btn-soft">Not Applied</button>
+  <button id="badge" class="btn btn-soft">Not Applied</button>
   <p>Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
-  <button class="btn btn-outline btn-success mr-2">Interview</button>
+  <button id="btn-interview" class="btn btn-outline btn-success mr-2">Interview</button>
   <button class="btn btn-outline btn-error">Rejected</button>
     
   </div>
 
   <div class="job-card">
     <h2>WebFlow Agency</h2>
-    <span id="delete-btn" class=""><i class="fa-regular fa-trash-can"></i></span>
+    <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
   <p>Web Designer & Developer</p>
-  <p>Los Angeles, CA
- • 
-Part-time 
-•
- $80,000 - $120,000</p>
-  <button class="btn btn-soft">Not Applied</button>
+  <p>Los Angeles, CA • Part-time • $80,000 - $120,000</p>
+  <button id="badge" class="btn btn-soft">Not Applied</button>
   <p>Create stunning web experiences for high-profile clients. Must have portfolio and experience with modern web design trends.</p>
-  <button class="btn btn-outline btn-success mr-2">Interview</button>
+  <button id="btn-interview" class="btn btn-outline btn-success mr-2">Interview</button>
   <button class="btn btn-outline btn-error">Rejected</button>
     
   </div>
 
   <div class="job-card">
     <h2>DataViz Solutions</h2>
-    <span id="delete-btn" class=""><i class="fa-regular fa-trash-can"></i></span>
+    <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
   <p>Data Visualization Specialist</p>
   <p>Boston, MA 
 •
@@ -102,7 +129,7 @@ Part-time
 
   <div class="job-card">
     <h2>CloudFirst Inc</h2>
-    <span id="delete-btn" class=""><i class="fa-regular fa-trash-can"></i></span>
+    <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
   <p>Backend Developer</p>
   <p>Seattle, WA
  •
@@ -118,7 +145,7 @@ Part-time
 
   <div class="job-card">
     <h2>Innovation Labs</h2>
-    <span id="delete-btn" class=""><i class="fa-regular fa-trash-can"></i></span>
+    <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
   <p>UI/UX Engineer</p>
   <p>Austin, TX
  •
@@ -134,7 +161,7 @@ Part-time
 
   <div class="job-card">
     <h2>TechCorp Industries</h2>
-    <span id="delete-btn" class=""><i class="fa-regular fa-trash-can"></i></span>
+    <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
   <p>Senior Frontend Developer</p>
   <p>San Francisco, CA
  • 
@@ -150,7 +177,7 @@ Full-time
 
   <div class="job-card">
     <h2>MegaCorp Solutions</h2>
-    <span id="delete-btn" class=""><i class="fa-regular fa-trash-can"></i></span>
+    <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
   <p>JavaScript Developer</p>
   <p>New York, NY
  • 
@@ -166,7 +193,7 @@ Full-time
 
   <div class="job-card">
     <h2>StartupXYZ</h2>
-    <span id="delete-btn" class=""><i class="fa-regular fa-trash-can"></i></span>
+    <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
   <p>Full Stack Engineer</p>
   <p>Remote
  • 
@@ -179,9 +206,34 @@ Full-time
   <button class="btn btn-outline btn-error">Rejected</button>
     
   </div>
+
+    
+  </div>
+
+  <input type="radio" name="job_tabs" class="tab" aria-label="Interview"  />
+  <div id="tab-content" class="tab-content bg-base-100 border-base-300 p-6 "> 
+    <div id="interview-tab" class="flex flex-col items-center justify-center">
+   <img src="jobs.png">
+    <h4>No jobs available</h4>
+    <p class="opacity-50">Check back soon for new job opportunity</p>
+  </div>
+  </div>
+
+  <input type="radio" name="job_tabs" class="tab" aria-label="Rejected" />
+  <!-- <div class="tab-content bg-base-100 border-base-300 p-6">
+    <button id="rejected-tab" class="btn btn-soft btn-primary">Rejected</button>
+  </div> -->
+  <div class="tab-content bg-base-100 border-base-300 p-6"> 
+    <div id="rejected-tab" class="flex flex-col items-center justify-center">
+    <img src="jobs.png">
+   <h4 class="font-bold">No jobs Available</h4>
+  </div>
+</div>
+
+
   
+
 </section>
 <script src="./script/machin.js"></script>
 </body>
-
 </html>
