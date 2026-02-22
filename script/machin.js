@@ -1,32 +1,55 @@
 
 
-let jobCardLen = document.querySelectorAll(".job-card");
+  
+  let jobCardLen = document.querySelectorAll(".job-card");
 document.getElementById("available-count").innerText = jobCardLen.length;
 document.getElementById("job-count").innerText = jobCardLen.length;
 
 
 
-// machin to get value of any id
+// interview
 
-function getValueFromInput(id){
-   return document.getElementById(id).value;
-}
+document.getElementById("btn-interview").addEventListener('click', function () {
 
-function getBalance(){
-    return Number(document.getElementById("balance").innerText);
-}
+  // set badge 
+  let badge = document.getElementById("badge");
+  badge.classList.add("badge");
+  badge.innerText ="Interview";
 
-function setBalance(newBalance){
-    document.getElementById("balance").innerText = newBalance;
-}
+  // interview count ++
 
-function showOnly(id){
-    document.getElementById("add-money").classList.add("hidden");
-    document.getElementById("cashout").classList.add("hidden");
-    document.getElementById("send-money").classList.add("hidden");
-    document.getElementById("get-bonus").classList.add("hidden");
-    document.getElementById("pay-bill").classList.add("hidden");
-    document.getElementById("transactions").classList.add("hidden");
+ let count = parseInt(document.getElementById("interview-count").innerText);
+  
+  document.getElementById("interview-count").innerText = count + 1;
 
-    document.getElementById(id).classList.remove("hidden");
-}
+  // copy to interview tab div
+
+  let jobCard = document.getElementById("card-1");
+  let clone = jobCard.cloneNode(true);
+ document.getElementById("tab-content").appendChild(clone);
+  
+  document.getElementById("interview-tab").remove();
+ 
+});
+
+
+// btn delete 
+// document.querySelector(".btn-delete").addEventListener('click', function () {
+
+//  let btnParent = this.parentElement;
+//   btnParent.remove();
+
+
+// });
+
+// multiple parent element  delete with btn-delete
+document.addEventListener('click', function (e) {
+let btn = e.target.closest(".btn-delete");
+  if(btn){
+    btn.parentElement.remove();
+  }
+});
+
+
+
+
