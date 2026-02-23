@@ -7,6 +7,7 @@ document.getElementById("total-job-count").innerText = jobCardLen.length;
 
 }
 
+
 updateAllCounts();
 
 // when all jobs tab clicked, available jobs count will update.
