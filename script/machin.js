@@ -12,9 +12,9 @@ document.getElementById("job-count").innerText = jobCardLen.length;
 document.getElementById("btn-interview").addEventListener('click', function () {
 
   // set badge 
-  let badge = document.getElementById("badge");
-  badge.classList.add("badge");
-  badge.innerText ="Interview";
+  // let badge = document.getElementById("badge");
+  // badge.classList.add("badge");
+  // badge.innerText ="Interview";
 
   // interview count ++
 
@@ -24,11 +24,11 @@ document.getElementById("btn-interview").addEventListener('click', function () {
 
   // copy to interview tab div
 
-  let jobCard = document.getElementById("card-1");
-  let clone = jobCard.cloneNode(true);
- document.getElementById("tab-content").appendChild(clone);
+  // let jobCard = document.getElementById("card-1");
+ //  let clone = jobCard.cloneNode(true);
+ // document.getElementById("tab-content").appendChild(clone);
   
-  document.getElementById("interview-tab").remove();
+ //  document.getElementById("interview-tab").remove();
  
 });
 
@@ -50,6 +50,48 @@ let btn = e.target.closest(".btn-delete");
   }
 });
 
+
+// multiple interview 
+
+document.addEventListener('click', function (e) {
+let btn = e.target.closest(".btn-interview");
+  if(btn){
+  let clone =  btn.parentElement.cloneNode(true);
+    document.getElementById("interview-tab-content").appendChild(clone);
+  
+  document.getElementById("interview-empty-content").remove();
+
+        // set badge 
+  // let badge = e.target.closest(".badge");
+    let badge = document.querySelector(".badge");
+    newBadge = document.createElement("button");
+  newBadge.classList.add("badge-style");
+  newBadge.innerText ="Interview";
+    badge.replaceWith(newBadge);
+  
+  }
+});
+
+
+// rejected tab 
+
+document.addEventListener('click', function (e) {
+let btn = e.target.closest(".btn-rejected");
+  if(btn){
+  let clone =  btn.parentElement.cloneNode(true);
+    document.getElementById("rejected-tab-content").appendChild(clone);
+  
+  document.getElementById("rejected-empty-content").remove();
+
+    // set badge 
+  // let badge = e.target.closest(".badge");
+    let badge = document.querySelector(".badge");
+    newBadge = document.createElement("button");
+  newBadge.classList.add("badge-style");
+  newBadge.innerText ="Rejected";
+    badge.replaceWith(newBadge);
+  }
+});
 
 
 
