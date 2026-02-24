@@ -31,7 +31,7 @@ function updateAvailableCount(){
 document.addEventListener('click', function(e){
   let btn;
 
-  // 🔹 Delete
+  // Delete
   btn = e.target.closest(".btn-delete");
   if(btn){
     let card = btn.closest(".job-card");
@@ -45,7 +45,7 @@ document.addEventListener('click', function(e){
     if(originalCard){
       let badge = originalCard.querySelector(".badge");
       badge.classList.remove("badge-interview", "badge-error");
-      badge.innerText = "New";
+      badge.innerText = "Not Applied";
     }
 
     updateAllCounts();
@@ -55,7 +55,7 @@ document.addEventListener('click', function(e){
     return;
   }
 
-  // 🔹 Move to Interview
+  //  Move to Interview
   btn = e.target.closest(".btn-interview");
   if(btn){
     let card = btn.closest(".job-card");
@@ -89,7 +89,7 @@ document.addEventListener('click', function(e){
     return;
   }
 
-  // 🔹 Move to Rejected
+  // Move to Rejected
   btn = e.target.closest(".btn-rejected");
   if(btn){
     let card = btn.closest(".job-card");
@@ -123,7 +123,7 @@ document.addEventListener('click', function(e){
     return;
   }
 
-  // 🔹 Tab click update available-count
+  //  Tab click update available-count
   if(e.target.closest(".all-jobs-tab")){
     document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
     e.target.closest(".all-jobs-tab").classList.add("active");
