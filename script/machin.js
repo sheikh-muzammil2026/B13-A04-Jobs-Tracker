@@ -1,127 +1,144 @@
+// ===============================
+// 📦 DATA STORAGE
+// ===============================
+let allJobs = [];
+let interviewList = [];
+let rejectedList = [];
+let currentStatus = 'all';
 
-function updateAllCounts(){
-  // function to calculate total and available jobs
-  let jobCardLen = document.querySelectorAll(".job-card");
-document.getElementById("available-count").innerText = jobCardLen.length;
-document.getElementById("total-job-count").innerText = jobCardLen.length;
+// ===============================
+// 📊 ELEMENTS
+// ===============================
+const totalCount = document.getElementById('total-job-count');
+const availableCount = document.getElementById('available-count');
+const interviewCount = document.getElementById('interview-count');
+const rejectedCount = document.getElementById('rejected-count');
 
+const allSection = document.getElementById('all-tab-content');
+const interviewSection = document.getElementById('interview-tab-content');
+const rejectedSection = document.getElementById('rejected-tab-content');
+
+const mainContainer = document.querySelector('main');
+
+// ===============================
+// 🚀 LOAD INITIAL JOBS
+// ===============================
+function loadInitialJobs() {
+  const cards = document.querySelectorAll('#all-tab-content .job-card');
+
+  cards.forEach(card => {
+    const title = card.querySelector('.job-title').innerText;
+    const company = card.querySelector('.company').innerText;
+
+    allJobs.push({ title, company, status: 'All' });
+  });
+
+  updateAvailableCount();
+  calculateCount();
 }
 
+loadInitialJobs();
 
-updateAllCounts();
-
-// when all jobs tab clicked, available jobs count will update.
-
-document.addEventListener('click', function (e){
-  if(e.target.closest(".all-jobs-tab")){
-  let cards =  document.querySelectorAll("#all-tab-content .job-card");
-    document.getElementById("available-count").innerText = cards.length ;
-  }
-});
-
-
-// when interview tab clicked, available jobs count will update.
-document.addEventListener('click', function (e){
-  if(e.target.closest(".interview-tab")){
-  let cards =  document.querySelectorAll("#interview-tab-content .job-card");
-    document.getElementById("available-count").innerText = `${cards.length} of 8`;
-  }
-});
-
-// when rejected  tab clicked, available jobs count will update.
-document.addEventListener('click', function (e){
-  if(e.target.closest(".rejected-tab")){
-  let cards =  document.querySelectorAll("#rejected-tab-content .job-card");
-    document.getElementById("available-count").innerText = `${cards.length} of 8`;
-  }
-});
-
-
-
-//  function to calculate tabs child
-function updateCounts(tabId,countId){
-  let jobCard = document.querySelectorAll(`#${tabId} .job-card`);
-  document.getElementById(countId).innerText = jobCard.length;
-  
+// ===============================
+// 🔢 COUNT FUNCTIONS
+// ===============================
+function calculateCount() {
+  totalCount.innerText = allJobs.length;
+  interviewCount.innerText = interviewList.length;
+  rejectedCount.innerText = rejectedList.length;
 }
 
-
-
-// multiple parent element  delete with btn-delete
-
-document.addEventListener('click', function (e) {
-let btn = e.target.closest(".btn-delete");
-  if(btn){
-    btn.parentElement.remove();
-    updateAllCounts();
-  }
-});
-
-
-
-
-document.addEventListener('click', function (e) {
- let btn = e.target.closest(".btn-interview");
-  if(btn){
-  let clone =  btn.parentElement.parentElement.cloneNode(true); // copied
-
-    // set badge 
-  let cloneBadge = clone.querySelector(".badge");
-  let orginalbadge = btn.closest(".job-card").querySelector(".badge");
-    
-
-  cloneBadge.classList.add("badge-interview");
-  cloneBadge.innerText ="Interview";
-
-
-  orginalbadge.classList.add("badge-interview");
-  orginalbadge.innerText ="Interview";
-    
- 
-    
-  document.getElementById("interview-tab-content").appendChild(clone); // pasted
-  let empty = document.getElementById("interview-empty-content"); // old content deleted
-if(empty){
-  empty.remove();
+function updateAvailableCount() {
+  const cards = document.querySelectorAll('#all-tab-content .job-card');
+  availableCount.innerText = cards.length;
 }
-  updateCounts("interview-tab-content","interview-count")
-    
+
+// ===============================
+// 🎯 BADGE UPDATE
+// ===============================
+function updateBadge(card, status) {
+  const badge = card.querySelector('.badge');
+
+  badge.classList.remove('badge-interview', 'badge-error');
+
+  if (status === 'Interview') {
+    badge.classList.add('badge-interview');
+    badge.innerText = 'Interview';
   }
-});
 
+  if (status === 'Rejected') {
+    badge.classList.add('badge-error');
+    badge.innerText = 'Rejected';
+  }
+}
 
-// copy to rejected tab 
+// ===============================
+// 🧠 MOVE CARD FUNCTION
+// ===============================
+function moveCard(card, targetSection) {
+  const clone = card.cloneNode(true);
+  targetSection.appendChild(clone);
+}
 
-document.addEventListener('click', function (e) {
-let btn = e.target.closest(".btn-rejected");
-  if(btn){
-  let clone =  btn.parentElement.parentElement.cloneNode(true);
+// ===============================
+// 🖱 EVENT DELEGATION
+// ===============================
+mainContainer.addEventListener('click', function (e) {
 
-// set badge 
-    
-   let orginalBadge2 = btn.closest(".job-card").querySelector(".badge");
-   let cloneBadge2 = clone.querySelector(".badge");
+  const card = e.target.closest('.job-card');
+  if (!card) return;
 
-  orginalBadge2.classList.add("badge-error");
-  orginalBadge2.innerText ="Rejected";
-  
-  cloneBadge2.classList.add("badge-error");
-  cloneBadge2.innerText ="Rejected";
+  const title = card.querySelector('.job-title').innerText;
 
+  // 🟢 INTERVIEW
+  if (e.target.closest('.btn-interview')) {
 
-    
-    document.getElementById("rejected-tab-content").appendChild(clone);
-  
- let empty2 = document.getElementById("rejected-empty-content");
-    if(empty2){
-      empty2.remove();
+    const job = allJobs.find(j => j.title === title);
+    job.status = 'Interview';
+
+    if (!interviewList.find(j => j.title === title)) {
+      interviewList.push(job);
     }
 
-    updateCounts("rejected-tab-content", "rejected-count")
-    
+    rejectedList = rejectedList.filter(j => j.title !== title);
+
+    updateBadge(card, 'Interview');
+    moveCard(card, interviewSection);
+
+    calculateCount();
+    updateAvailableCount();
   }
+
+  // 🔴 REJECTED
+  if (e.target.closest('.btn-rejected')) {
+
+    const job = allJobs.find(j => j.title === title);
+    job.status = 'Rejected';
+
+    if (!rejectedList.find(j => j.title === title)) {
+      rejectedList.push(job);
+    }
+
+    interviewList = interviewList.filter(j => j.title !== title);
+
+    updateBadge(card, 'Rejected');
+    moveCard(card, rejectedSection);
+
+    calculateCount();
+    updateAvailableCount();
+  }
+
+  // 🗑 DELETE
+  if (e.target.closest('.btn-delete')) {
+
+    card.remove();
+
+    allJobs = allJobs.filter(j => j.title !== title);
+    interviewList = interviewList.filter(j => j.title !== title);
+    rejectedList = rejectedList.filter(j => j.title !== title);
+
+    calculateCount();
+    updateAvailableCount();
+  }
+
 });
-
-
-
-
