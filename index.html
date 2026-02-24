@@ -20,10 +20,9 @@
       font-family: "Outfit", sans-serif;
   }
   body{
-    /* padding: 20px; */
+    
     background-color: #F8FAFC;
-    margin: 60px auto;
-    max-width: 1140px;
+    
   }
  .badge-interview{
    background-color: #dcfce7;
@@ -36,9 +35,9 @@
  }
 
 .badge-error {
-  background-color: #fee2e2;   /* light red */
-  color: #b91c1c;              /* dark red text */
-  border-color: #fecaca;       /* soft red border */
+  background-color: #fee2e2;   
+  color: #b91c1c;              
+  border-color: #fecaca;      
   display: inline-block;
   padding: 4px 10px;
   font-size: 12px;
@@ -51,7 +50,6 @@
   .job-card{
     background-color: white ;
     border-radius: 10px;
-    /* border: 1px solid gray; */
     padding: 20px;
     position: relative;
     margin-bottom: 16px;
@@ -65,7 +63,6 @@
   position: absolute;
   top: 2px;
   right: 2px;
-  /* border: 1px solid gray; */
   border-radius: 50%;
   padding: 5px;
   
@@ -74,16 +71,16 @@
   
 </head>
 
-<body >
- 
-  <section class="top-boxs ">
-    <h1 class="font-bold min-h-8">Job Application Tracker</h1>
-    <div class="card-container shadow-md lg:max-w-6xl bg-base-300 mt-5 mb-16 grid grid-cols-3 grid-rows-1 gap-5 mx-auto p-4">
+<body>
+ <div class="container mx-auto px-4">
+  <header class="top-boxs ">
+    <h1 class="text-2xl sm:text-3xl lg:text-4xl">Job Application Tracker</h1>
+    <div class="card-container shadow-md  lg:max-w-6xl bg-base-300 mt-5 mb-16 grid grid-cols-3 grid-rows-1 gap-5 mx-auto p-4">
       <div class="card-1 rounded-md bg-base-100 py-6 px-2">
       <p>Total</p>
       <p id="total-job-count" class="font-bold">0</p>
     </div>
-  <div class="card-3 bg-base-100 py-5 px-2 rounded-md ">
+  <div class="card-2 bg-base-100 py-5 px-2 rounded-md ">
       <p>Interview</p>
       <p id="interview-count" class=" text-green-500">0</p>
     </div>
@@ -94,11 +91,11 @@
     </div>
     </div>
   
-  </section>
+  </header>
 
 
   
-  <section id="all-jobs">
+  <main id="all-jobs">
     <div class="flex justify-between">
       <p class="font-bold mb-6">Available Jobs</p>
       <div class="flex flex-row gap-1 opacity-50">
@@ -246,7 +243,8 @@
     </div>
   </div>
   </div>
-  </section>
+  </main>
+</div>
 <script src="./script/script.js"></script>
 </body>
 </html>
