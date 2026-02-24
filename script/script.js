@@ -5,6 +5,8 @@ function updateAllCounts(){
   document.getElementById("total-job-count").innerText = jobCardLen.length;
 }
 
+updateAllCounts();
+
 function updateCounts(tabId,countId){
   let jobCard = document.querySelectorAll(`#${tabId} .job-card`);
   document.getElementById(countId).innerText = jobCard.length;
