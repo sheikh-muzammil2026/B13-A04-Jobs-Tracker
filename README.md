@@ -1,5 +1,11 @@
 
 
+**উত্তর:**
+```javascript
+
+
+
+
 ## 1️⃣ Difference Between `getElementById`, `getElementsByClassName`, `querySelector` / `querySelectorAll`
 
 ### 🅰 getElementById('id')
