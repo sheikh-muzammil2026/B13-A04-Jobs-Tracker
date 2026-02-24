@@ -1,252 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Job Application Tracker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Tracker</title>
 
-  
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<style>
-  *{
-      font-family: "Outfit", sans-serif;
-  }
-  body{
-    /* padding: 20px; */
-    background-color: #F8FAFC;
-    margin: 60px auto;
-    max-width: 1140px;
-  }
- .badge-interview{
-   background-color: #dcfce7;
-   border-radius: 10px;
-   padding: 4px 5px;
-   color: #16a34a;
-   font-size: 12px;
-  font-weight: 500;
-  max-width: 100px;
- }
-
-.badge-error {
-  background-color: #fee2e2;   /* light red */
-  color: #b91c1c;              /* dark red text */
-  border-color: #fecaca;       /* soft red border */
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 9999px;
-  border: 1px solid transparent;
-  max-width: 100px;
-}
-
-  .job-card{
-    background-color: white ;
-    border-radius: 10px;
-    /* border: 1px solid gray; */
-    padding: 20px;
-    position: relative;
-    margin-bottom: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    box-shadow: 2px 2px 5px gray;
-    
-  }
-.btn-delete{
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  /* border: 1px solid gray; */
-  border-radius: 50%;
-  padding: 5px;
-  
-}
-</style>
-  
+  <style>
+    body {
+      background:#F8FAFC;
+      margin:60px auto;
+      max-width:1100px;
+      font-family:sans-serif;
+    }
+    .job-card{
+      background:white;
+      padding:20px;
+      border-radius:10px;
+      margin-bottom:16px;
+      position:relative;
+      box-shadow:2px 2px 5px rgba(0,0,0,0.1);
+    }
+    .badge-interview{
+      background:#dcfce7;
+      color:#16a34a;
+      padding:4px 10px;
+      border-radius:9999px;
+      font-size:12px;
+    }
+    .badge-error{
+      background:#fee2e2;
+      color:#b91c1c;
+      padding:4px 10px;
+      border-radius:9999px;
+      font-size:12px;
+    }
+    .btn-delete{
+      position:absolute;
+      right:8px;
+      top:8px;
+      cursor:pointer;
+    }
+  </style>
 </head>
 
-<body >
- 
-  <section class="top-boxs ">
-    <h1 class="font-bold min-h-8">Job Application Tracker</h1>
-    <div class="card-container shadow-md lg:max-w-6xl bg-base-300 mt-5 mb-16 grid grid-cols-3 grid-rows-1 gap-5 mx-auto p-4">
-      <div class="card-1 rounded-md bg-base-100 py-6 px-2">
+<body>
+
+<!-- 🔹 Top Counts -->
+<section class="mb-10">
+  <h1 class="text-2xl font-bold mb-4">Job Application Tracker</h1>
+
+  <div class="grid grid-cols-3 gap-4 bg-base-200 p-4 rounded">
+    <div>
       <p>Total</p>
       <p id="total-job-count" class="font-bold">0</p>
     </div>
-  <div class="card-3 bg-base-100 py-5 px-2 rounded-md ">
+    <div>
       <p>Interview</p>
-      <p id="interview-count" class=" text-green-500">0</p>
+      <p id="interview-count" class="text-green-600 font-bold">0</p>
     </div>
-
-  <div class="card-3 bg-base-100 py-5 px-2 rounded-md">
+    <div>
       <p>Rejected</p>
-      <p id="rejected-count" class="text-red-500">0</p>
+      <p id="rejected-count" class="text-red-600 font-bold">0</p>
     </div>
-    </div>
-  
-  </section>
+  </div>
+</section>
 
+<main>
 
-  
-  <section id="all-jobs">
-    <div class="flex justify-between">
-      <p class="font-bold mb-6">Available Jobs</p>
-      <div class="flex flex-row gap-1 opacity-50">
-        <p id="available-count">0</p><span>jobs</span>
-      </div>
-    </div>
+  <!-- 🔹 Available Count -->
+  <div class="flex justify-between mb-4">
+    <p class="font-bold">Available Jobs</p>
+    <p><span id="available-count">0</span> jobs</p>
+  </div>
 
-  
-
+  <!-- 🔹 Tabs -->
   <div class="tabs tabs-box">
-    <input type="radio" name="job_tabs" class="tab all-jobs-tab" aria-label="All" checked="checked" />
-    <!-- all jobs content hare -->
-    <div id="all-tab-content" class="tab-content bg-base-100 border-base-300 p-6">
-      
-    <div id="card-1" class="job-card">
-      <h2 class="font-bold">Mobile First Corp</h2>
-      <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
-    <p class="opacity-75">React Native Developer</p>
-    <p class="opacity-75">Remote • Full-time • $130,000 - $175,000</p>
-    <button class="badge btn btn-soft">Not Applied</button>
-    <p class="opacity-75">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
-   <div class="btn-box">
-     <button id="btn-interview" class="btn-interview btn btn-outline btn-success mr-2">Interview</button>
-    <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
-   </div>
-      
+
+    <!-- 🔸 All -->
+    <input type="radio" name="job_tabs" class="tab" aria-label="All" checked>
+    <div id="all-tab-content" class="tab-content p-4 bg-base-100">
+
+      <!-- Job Card -->
+      <div class="job-card">
+        <span class="btn-delete">🗑</span>
+        <h2 class="job-title font-bold">React Native Developer</h2>
+        <p class="company opacity-70">Mobile First Corp</p>
+        <span class="badge">Not Applied</span>
+        <p class="opacity-70">Remote • Full-time</p>
+
+        <div class="mt-4">
+          <button class="btn-interview btn btn-outline btn-success">Interview</button>
+          <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <span class="btn-delete">🗑</span>
+        <h2 class="job-title font-bold">Frontend Developer</h2>
+        <p class="company opacity-70">TechCorp</p>
+        <span class="badge">Not Applied</span>
+        <p class="opacity-70">Remote • Full-time</p>
+
+        <div class="mt-4">
+          <button class="btn-interview btn btn-outline btn-success">Interview</button>
+          <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <span class="btn-delete">🗑</span>
+        <h2 class="job-title font-bold">UI/UX Designer</h2>
+        <p class="company opacity-70">DesignHub</p>
+        <span class="badge">Not Applied</span>
+        <p class="opacity-70">Remote • Contract</p>
+
+        <div class="mt-4">
+          <button class="btn-interview btn btn-outline btn-success">Interview</button>
+          <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
+        </div>
+      </div>
+
     </div>
 
-    <div class="job-card">
-      <h2 class="font-bold">WebFlow Agency</h2>
-      <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
-    <p class="opacity-75">Web Designer & Developer</p>
-    <p class="opacity-75">Los Angeles, CA • Part-time • $80,000 - $120,000</p>
-    <button class="badge btn btn-soft">Not Applied</button>
-    <p class="opacity-75">Create stunning web experiences for high-profile clients. Must have portfolio and experience with modern web design trends.</p>
-    <div class="btn-box">
-     <button id="btn-interview" class="btn-interview btn btn-outline btn-success mr-2">Interview</button>
-    <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
-   </div>
-      
+    <!-- 🔸 Interview -->
+    <input type="radio" name="job_tabs" class="tab" aria-label="Interview">
+    <div id="interview-tab-content" class="tab-content p-4 bg-base-100">
+      <p class="opacity-50">No jobs yet</p>
     </div>
 
-    <div class="job-card">
-      <h2 class="font-bold">DataViz Solutions</h2>
-      <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
-    <p class="opacity-75">Data Visualization Specialist</p>
-    <p class="opacity-75">Boston, MA • Full-time • $125,000 - $165,000</p>
-    <button class="badge btn btn-soft">Not Applied</button>
-    <p class="opacity-75">Transform complex data into compelling visualizations. Required skills: D3.js, React, and strong analytical thinking.</p>
-       <div class="btn-box">
-     <button id="btn-interview" class="btn-interview btn btn-outline btn-success mr-2">Interview</button>
-    <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
-   </div>
-      
+    <!-- 🔸 Rejected -->
+    <input type="radio" name="job_tabs" class="tab" aria-label="Rejected">
+    <div id="rejected-tab-content" class="tab-content p-4 bg-base-100">
+      <p class="opacity-50">No jobs yet</p>
     </div>
 
-    <div class="job-card">
-      <h2 class="font-bold">CloudFirst Inc</h2>
-      <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
-    <p class="opacity-75">Backend Developer</p>
-    <p class="opacity-75">Seattle, WA • Full-time• $140,000 - $190,000</p>
-    <button class="badge btn btn-soft">Not Applied</button>
-    <p class="opacity-75">Design and maintain scalable backend systems using Python and AWS. Work with modern DevOps practices and cloud infrastructure.</p>
-    <div class="btn-box">
-     <button id="btn-interview" class="btn-interview btn btn-outline btn-success mr-2">Interview</button>
-    <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
-   </div>
-      
-    </div>
-
-    <div class="job-card">
-      <h2 class="font-bold">Innovation Labs</h2>
-      <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
-    <p class="opacity-75">UI/UX Engineer</p>
-    <p class="opacity-75">Austin, TX • Full-time  • $110,000 - $150,000</p>
-    <button class="badge btn btn-soft">Not Applied</button>
-    <p class="opacity-75">Create beautiful and functional user interfaces for our suite of products. Strong design skills and frontend development expertise required.</p>
-       <div class="btn-box">
-     <button id="btn-interview" class="btn-interview btn btn-outline btn-success mr-2">Interview</button>
-    <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
-   </div>
-      
-    </div>
-
-    <div class="job-card">
-      <h2 class="font-bold">TechCorp Industries</h2>
-      <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
-    <p class="opacity-75">Senior Frontend Developer</p>
-    <p class="opacity-75">San Francisco, CA • Full-time  • $130,000 - $175,000</p>
-    <button class="badge btn btn-soft">Not Applied</button>
-    <p class="opacity-75">We are looking for an experienced Frontend Developer to build scalable web applications using React and TypeScript. You will work with a talented team on cutting-edge projects.</p>
-       <div class="btn-box">
-     <button id="btn-interview" class="btn-interview btn btn-outline btn-success mr-2">Interview</button>
-    <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
-   </div>
-      
-    </div>
-
-    <div class="job-card">
-      <h2 class="font-bold">MegaCorp Solutions</h2>
-      <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
-    <p class="opacity-75">JavaScript Developer</p>
-    <p class="opacity-75">New York, NY •  Full-time • $130,000 - $170,00</p>
-    <button class="badge btn btn-soft">Not Applied</button>
-    <p class="opacity-75">Build enterprise applications with JavaScript and modern frameworks. We offer competitive compensation, health insurance, and professional development opportunities..</p>
-       <div class="btn-box">
-     <button id="btn-interview" class="btn-interview btn btn-outline btn-success mr-2">Interview</button>
-    <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
-   </div>
-      
-    </div>
-
-    <div class="job-card">
-      <h2 class="font-bold">StartupXYZ</h2>
-      <span id="" class="btn-delete"><i class="fa-regular fa-trash-can"></i></span>
-    <p class="opacity-75">Full Stack Engineer</p>
-    <p class="opacity-75">Remote • Full-time • $120,000 - $160,000</p>
-    <button class="badge btn btn-soft">Not Applied</button>
-    <p class="opacity-75">Join our fast-growing startup and work on our core platform. Experience with Node.js and React required. Great benefits and equity package included.</p>
-       <div class="btn-box">
-     <button id="btn-interview" class="btn-interview btn btn-outline btn-success mr-2">Interview</button>
-    <button class="btn-rejected btn btn-outline btn-error">Rejected</button>
-   </div>
-      
-    </div>
-
-      
-    </div>
-
-    <input type="radio" name="job_tabs" class="tab interview-tab" aria-label="Interview"  />
-    <div id="interview-tab-content" class="tab-content bg-base-100 border-base-300 p-6 "> 
-      <div id="interview-empty-content" class="flex flex-col items-center justify-center">
-    <img src="jobs.png">
-      <h4 class="font-bold">No jobs available</h4>
-      <p class="opacity-50">Check back soon for new job opportunity</p>
-    </div>
-    </div>
-
-    <input type="radio" name="job_tabs" class="tab rejected-tab" aria-label="Rejected" />
-
-    <div id="rejected-tab-content" class="tab-content bg-base-100 border-base-300 p-6"> 
-      <div id="rejected-empty-content" class="flex flex-col items-center justify-center">
-      <img src="jobs.png">
-    <h4 class="font-bold">No jobs Available</h4>
-    </div>
   </div>
-  </div>
-  </section>
+
+</main>
+
 <script src="./script/machin.js"></script>
 </body>
 </html>
