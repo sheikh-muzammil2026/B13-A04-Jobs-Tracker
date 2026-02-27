@@ -15,13 +15,13 @@ document.querySelector(".card");
 document.querySelectorAll(".card");
 ```
 ## 2️⃣ How to Create and Insert a New Element into the DOM
-✅ Steps
-Create element
-Add content or class
-Insert into DOM
+### ✅ Steps
+- Create element
+- Add content or class
+- Insert into DOM
 ### ✅ Example
 
-```
+```js
 // 1. Create element
 const newDiv = document.createElement("div");
 
@@ -52,18 +52,18 @@ document.getElementById("child").addEventListener("click", () => {
 });
 ```
 ### 🔎 Output when button is clicked:
-Copy code
-
+```console
 Child clicked
 Parent clicked
+```
 ### 👉 Event first triggers on child, then bubbles to parent.
 
 ## 4️⃣ What is Event Delegation? Why is it useful?
 Event Delegation is a technique where you attach an event listener to a parent element instead of multiple child elements.
 ### ✅ Why Useful?
-Improves performance
-Works for dynamically added elements
-Less code
+- Improves performance
+- Works for dynamically added elements
+- Less code
 ### ✅ Example
 ```
 document.getElementById("list").addEventListener("click", function(e) {
@@ -74,11 +74,11 @@ document.getElementById("list").addEventListener("click", function(e) {
 ```
 
 ## 5️⃣ Difference Between preventDefault() and stopPropagation()
-Method: preventDefault()
-What it does: Stops default browser behavior
 
-Method: preventDefault()
-What it does:Stops event from bubbling up
+ Method | What it does |
+|--------|------------|
+| preventDefault() | Stops default browser behavior|
+| stopPropagation() | Stops event from bubbling up |
 
 ### ✅ Example
 ```Html
