@@ -103,7 +103,9 @@ let btnInterview = e.target.closest(".btn-interview");
       interviewTabContent.appendChild(jobCard);
       updateBoxCounts();
       toggleEmptyState(rejectedTabContent,rejectedEmptyMessage);
-      
+      // available count update 
+       availableJobsCount.innerText = `${jobCardLen(rejectedTabContent)} of 8`;
+    
     }else if (jobCard.closest("#all-tab-content")){
           	// check isExists
 		let targetCards = Array.from(interviewTabContent.querySelectorAll(".job-card"));
@@ -144,7 +146,10 @@ let btnInterview = e.target.closest(".btn-interview");
       rejectedTabContent.appendChild(jobCard);
       updateBoxCounts();
       toggleEmptyState(interviewTabContent,interviewEmptyMessage);
+	  // available count update 
+       availableJobsCount.innerText = `${jobCardLen(interviewTabContent)} of 8`;
 
+		 
  	 } else if (jobCard.closest("#all-tab-content")){
        
 		let targetCards = Array.from(rejectedTabContent.querySelectorAll(".job-card"));
