@@ -82,12 +82,10 @@ document.getElementById("list").addEventListener("click", function(e) {
 
 ### ✅ Example
 ```Html
-Copy code
 <a href="https://google.com" id="link">Go to Google</a>
 ```
 
 ```Js
-Copy code
 document.getElementById("link").addEventListener("click", function(e) {
   e.preventDefault();      // stops link navigation
   e.stopPropagation();     // stops bubbling
