@@ -7,7 +7,7 @@
 | `querySelector()` | CSS selector | First matching element | Flexible |
 | `querySelectorAll()` | CSS selector | NodeList | Static collection |
 
-### ✅ Example
+-- ✅ Example
 ```
 document.getElementById("title");
 document.getElementsByClassName("card");
