@@ -1,29 +1,4 @@
 
-// script.js
-// │
-// ├── DOM references
-// ├── helper functions
-// │     ├── getCount()
-// │     ├── updateCounts()
-// │     ├── toggleEmptyState()
-// │
-// ├── event listener
-// │     ├── delete logic
-// │     ├── interview logic
-// │     ├── rejected logic
-// │     └── tab switch logic
-
-
-// Click Interview
-//    ↓
-// Find job-card
-//    ↓
-// Move to interview tab
-//    ↓
-// Hide empty message
-//    ↓
-// Update counts
-
 
 // count boxes
 const totalCountBox = document.getElementById("total-count-box");
@@ -44,7 +19,7 @@ let rejectedEmptyMessage = document.getElementById("rejected-empty-content");
 
 
 // একশন-১
-updateBoxCounts();
+ updateBoxCounts();
 // একশন-১
 availableJobsCount.innerText = jobCardLen(allTabContent);
 
@@ -60,12 +35,22 @@ let btnDelete = e.target.closest(".btn-delete");
   
   if(btnDelete){
   let  jobCard = btnDelete.closest(".job-card");
+  const jobId = jobCard.dataset.jobId;
     
   let isAllTabContent = jobCard.closest("#all-tab-content");
-    let isInterviewTabContent = jobCard.closest("#interview-tab-content");
-    let isRejectedTabContent = jobCard.closest("#rejected-tab-content");
+  let isInterviewTabContent = jobCard.closest("#interview-tab-content");
+  let isRejectedTabContent = jobCard.closest("#rejected-tab-content");
     
   jobCard.remove();
+    
+// Reset original All tab badge if exists
+  let originalCard = document.querySelector(`#all-tab-content .job-card[data-job-id="${jobId}"]`);
+    if(originalCard){
+      let badge = originalCard.querySelector(".badge");
+      badge.classList.remove("badge-interview", "badge-error");
+      badge.innerText = "Not Applied";
+    }
+      // update counts and empty msg
     updateBoxCounts();
     toggleEmptyState(interviewTabContent,interviewEmptyMessage);
     toggleEmptyState(rejectedTabContent,rejectedEmptyMessage);
@@ -88,6 +73,17 @@ let btnInterview = e.target.closest(".btn-interview");
 
   if(btnInterview){
   let jobCard = btnInterview.closest(".job-card"); 
+  let jobId = jobCard.dataset.jobId;
+
+	    // Update original All tab card badge
+    let originalCard = document.querySelector(`#all-tab-content .job-card[data-job-id="${jobId}"]`);
+    if(originalCard){
+      let badge = originalCard.querySelector(".badge");
+      badge.classList.remove("badge-error");
+      badge.classList.add("badge-interview");
+      badge.innerText = "Interview";
+    }
+    
     
     if(jobCard.closest("#rejected-tab-content")){
       	// check isExists
@@ -99,13 +95,19 @@ let btnInterview = e.target.closest(".btn-interview");
       // badge change
       let badge = jobCard.querySelector(".badge");
       setBadge(badge, "Interview");
-      
+
+      // move to interview tab
       interviewTabContent.appendChild(jobCard);
+
+      
+
+      // update counts
       updateBoxCounts();
       toggleEmptyState(rejectedTabContent,rejectedEmptyMessage);
+
       // available count update 
-       availableJobsCount.innerText = `${jobCardLen(rejectedTabContent)} of 8`;
-    
+      availableJobsCount.innerText = `${jobCardLen(rejectedTabContent)} of 8`;
+      
     }else if (jobCard.closest("#all-tab-content")){
           	// check isExists
 		let targetCards = Array.from(interviewTabContent.querySelectorAll(".job-card"));
@@ -131,7 +133,18 @@ let btnInterview = e.target.closest(".btn-interview");
   let btnRejected = e.target.closest(".btn-rejected");
    if(btnRejected){
      let jobCard = btnRejected.closest(".job-card");
-
+ 	 let jobId = jobCard.dataset.jobId;
+     
+     // Update original All tab card badge
+    let originalCard = document.querySelector(`#all-tab-content .job-card[data-job-id="${jobId}"]`);
+    if(originalCard){
+      let badge = originalCard.querySelector(".badge");
+      badge.classList.remove("badge-interview");
+      badge.classList.add("badge-error");
+      badge.innerText = "Rejected";
+    }
+     
+     
  	 if (jobCard.closest("#interview-tab-content")){
 
        // check exist
@@ -142,14 +155,20 @@ let btnInterview = e.target.closest(".btn-interview");
        
        let badge = jobCard.querySelector(".badge");
       setBadge(badge, "Rejected");
-       
+
+       // move to rejected tab
       rejectedTabContent.appendChild(jobCard);
+
+       
+
+       
       updateBoxCounts();
       toggleEmptyState(interviewTabContent,interviewEmptyMessage);
-	  // available count update 
-       availableJobsCount.innerText = `${jobCardLen(interviewTabContent)} of 8`;
 
-		 
+       // available count update 
+       availableJobsCount.innerText = `${jobCardLen(interviewTabContent)} of 8`;
+    
+
  	 } else if (jobCard.closest("#all-tab-content")){
        
 		let targetCards = Array.from(rejectedTabContent.querySelectorAll(".job-card"));
@@ -164,7 +183,7 @@ let btnInterview = e.target.closest(".btn-interview");
        let cloneBadge = clone.querySelector(".badge");
        setBadge(cloneBadge, "Rejected");
    		 rejectedTabContent.appendChild(clone);
-    	 updateBoxCounts();
+    	updateBoxCounts();
  	 }else {
     	return;
  		 }
@@ -178,15 +197,16 @@ let btnInterview = e.target.closest(".btn-interview");
   if(interviewTab){
     availableJobsCount.innerText = `${jobCardLen(interviewTabContent)} of 8`;
     toggleEmptyState(interviewTabContent,interviewEmptyMessage);
-    updateBoxCounts();
+   updateBoxCounts();
   }
   if(rejectedTab){
     availableJobsCount.innerText = `${jobCardLen(rejectedTabContent)} of 8`;
     toggleEmptyState(rejectedTabContent,rejectedEmptyMessage);
-    updateBoxCounts();
+   updateBoxCounts();
   }
   if (allTab){
    availableJobsCount.innerText = jobCardLen(allTabContent);
-    updateBoxCounts();
+   updateBoxCounts();
   }
 });
+
